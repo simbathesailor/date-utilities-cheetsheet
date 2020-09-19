@@ -6,7 +6,7 @@
 
 ### UTC time when exact date, month, year, hours, minutes and second value is there
 
-WHen you have access to individual date entities, getting UTC
+When you have access to individual date entities, getting UTC
 
 ```javascript
 export function getUTCDate({
@@ -17,6 +17,7 @@ export function getUTCDate({
   minutes = 0,
   seconds = 0,
 }) {
+  // native one
   return Date.UTC(year, month, date, hours, minutes, seconds);
 }
 ```
@@ -29,43 +30,19 @@ This will give the the UTC date with the passed date entities. No offset and all
 
 ```javascript
 /**
- * [utcToSpecificZonedTime description]
+ * [utcToZonedTimeUtil description]
  *
  * @param   {[type]}  utcString  UTC string
- * @param   {[type]}  timeZone   timezone e.g "America/Los_Angeles"
+ * @param   {[type]}  timeZone   timezone e.g "Asia/Calcutta"
  *
  * @return  {[type]}  Date instance
+ *
  */
-export function utcToSpecificZonedTime({ utcString, timeZone }) {
+
+import { utcToZonedTime } from "date-fns-tz";
+
+export function utcToZonedTimeUtil({ utcString, timeZone }) {
   if (!utcString) return null;
   return utcToZonedTime(utcString || new Date(), timeZone);
-}
-```
-
-```javascript
-/**
- * You have hours and minutes which are in UTC  with you, and you want
- * the time in UTC.
- *
- * @param   {[type]}  timeZone  timezone e.g "America/Los_Angeles"
- * @param   {[type]}  hours     number 0 - 23
- * @param   {[type]}  minutes   number 0 - 59
- *
- * @return  {[type]}            e.g 1:00 PM , 2:30 AM
- */
-export function utcHoursMinutesToZonedTime({
-  timeZone,
-  hours,
-  minutes,
-  format = "hh:mm a",
-}) {
-  const ZonedTime = utcToZonedTime(
-    getUTCDateFormatWhenIndividualDateEntityPresent({
-      hours,
-      minutes,
-    }),
-    timeZone
-  );
-  return formatTimeZone(ZonedTime, format);
 }
 ```
